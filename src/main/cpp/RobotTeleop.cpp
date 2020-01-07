@@ -4,6 +4,7 @@
 using namespace std;
 
 bool motorDebug = false;
+double spinnerSpeed = 0.0;
 
 void Robot::TeleopInit() {
 	// Set the initial state for our variables, and pull some data from the driver station
@@ -481,7 +482,20 @@ void Robot::TeleopPeriodic() {
 		rightY1 = -0.5;
 	}
 
-			// Now that we have all of the controller inputs, we set the motors to their cooresponding vqriables
+	if (spinnerSpeed == 1) {
+		if (aButton1 && !buttonsPressed[0][0]) {
+			spinnerSpeed = 0.0;
+
+		}
+	} else {
+		if (aButton1 && !buttonsPressed[0][0]) {
+			spinnerSpeed = 1.0;
+		}
+	}
+
+	Spinner.Set(spinnerSpeed);
+
+	// Now that we have all of the controller inputs, we set the motors to their cooresponding vqriables
 	if (fabs(rightX1) > fabs(rightY1) && fabs(rightX1) > fabs(leftX1)) {
 		big = fabs(rightX1);
 	} else if (fabs(rightY1) > fabs(rightX1) && fabs(rightY1) > fabs(leftX1) ) {
@@ -496,11 +510,11 @@ void Robot::TeleopPeriodic() {
 		BackLeft.Set(((sin(atan2(rightY1, rightX1) - 0.7853981633974483) + leftX1 * (1 - rightTrigger1)) / 2) * big * multiplier);
 		BackRight.Set(((cos(atan2(rightY1, rightX1) - 0.7853981633974483) - leftX1 * (1 - rightTrigger1)) / 2) * big * multiplier);
 	} else {
-			// Tank drive code here
-			FrontLeft.Set(leftY1);
-			FrontRight.Set(rightY1);
-			BackLeft.Set(leftY1);
-			BackRight.Set(rightY1);
+		// Tank drive code here
+		FrontLeft.Set(leftY1);
+		FrontRight.Set(rightY1);
+		BackLeft.Set(leftY1);
+		BackRight.Set(rightY1);
 	}
 
 	// End driver code; Begin co-pilot code------------------------------------------------------------------------------------------------------------------------------

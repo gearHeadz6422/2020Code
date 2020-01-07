@@ -17,6 +17,7 @@ Robot::Robot() :
 	intake(7),
 	// climber(8),
 	liftHigh(9),
+	Spinner(17),
 
 	testTalon0(0),
 	testTalon1(1),

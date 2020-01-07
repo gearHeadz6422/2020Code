@@ -152,6 +152,7 @@ class Robot: public frc::TimedRobot {
 	WPI_TalonSRX liftHigh;
 	WPI_TalonSRX intake;
 	WPI_TalonSRX grabberWinch;
+	WPI_TalonSRX Spinner;
 
 	WPI_TalonSRX testTalon0;
 	WPI_TalonSRX testTalon1;
