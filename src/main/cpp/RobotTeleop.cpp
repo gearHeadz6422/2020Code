@@ -18,9 +18,6 @@ void Robot::TeleopInit() {
 	rightEncoder.Reset();
 	grabberEncoder.Reset();
 
-	liftHeightHigh = 0;
-	liftHeightLow = 0;
-
 	if (sensorBoardType == "navx") {
 		navx->ZeroYaw();
 	} else {
@@ -39,6 +36,7 @@ void Robot::TeleopInit() {
 	liftHigh.Set(ControlMode::PercentOutput, 0);
 	intake.Set(ControlMode::PercentOutput, 0);
 	grabberWinch.Set(ControlMode::PercentOutput, 0);
+	spinWheel.Set(ControlMode::PercentOutput, 0);
 
 	testTalon0.Set(ControlMode::PercentOutput, 0);
 	testTalon1.Set(ControlMode::PercentOutput, 0);
@@ -493,8 +491,6 @@ void Robot::TeleopPeriodic() {
 		}
 	}
 
-	Spinner.Set(spinnerSpeed);
-
 	// Now that we have all of the controller inputs, we set the motors to their cooresponding vqriables
 	if (fabs(rightX1) > fabs(rightY1) && fabs(rightX1) > fabs(leftX1)) {
 		big = fabs(rightX1);
@@ -559,6 +555,16 @@ void Robot::TeleopPeriodic() {
 		startButton2 = xboxcontroller1.GetStartButton();
 
 		dpad2 = xboxcontroller1.GetPOV();
+	}
+
+	if (aButton2 && !buttonsPressed[1][0]) {
+		if (spinning) {
+			spinning = false;
+			spinWheel.Set(0);
+		} else {
+			spinning = true;
+			spinWheel.Set(1);
+		}
 	}
 
 	// Runs the intake

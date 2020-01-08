@@ -15,9 +15,8 @@ Robot::Robot() :
 	liftLow(5),
 	grabberWinch(6),
 	intake(7),
-	// climber(8),
 	liftHigh(9),
-	Spinner(17),
+	spinWheel(10),
 
 	testTalon0(0),
 	testTalon1(1),

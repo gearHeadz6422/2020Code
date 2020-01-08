@@ -1,8 +1,12 @@
 #include "Robot.h"
 #include <cmath>
 using namespace std;
-#define LEFT 
+#define LEFT
 
-void Robot::AutonomousInit() { Robot::TeleopInit(); }
+void Robot::AutonomousInit() {
+    Robot::TeleopInit();
+}
 
-void Robot::AutonomousPeriodic() { Robot::TeleopPeriodic(); }
+void Robot::AutonomousPeriodic() {
+    Robot::TeleopPeriodic();
+}

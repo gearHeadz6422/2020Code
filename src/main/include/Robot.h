@@ -77,6 +77,8 @@ static double liftLowSpeed = 0.5;
 static double liftHighSpeed = 0.5;
 static bool holdingHatch = false;
 
+bool spinning = false;
+
 static double prevTime = 0.0;
 static double bumperHoldTime = 0.0;
 
@@ -152,7 +154,7 @@ class Robot: public frc::TimedRobot {
 	WPI_TalonSRX liftHigh;
 	WPI_TalonSRX intake;
 	WPI_TalonSRX grabberWinch;
-	WPI_TalonSRX Spinner;
+	WPI_TalonSRX spinWheel;
 
 	WPI_TalonSRX testTalon0;
 	WPI_TalonSRX testTalon1;
