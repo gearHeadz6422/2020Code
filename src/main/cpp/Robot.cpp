@@ -16,9 +16,7 @@ Robot::Robot() :
 	grabberWinch(6),
 	intake(7),
 	liftHigh(9),
-	spinWheel(10),
 
-	testTalon0(0),
 	testTalon1(1),
 	testTalon2(2),
 	testTalon3(3),
@@ -49,13 +47,6 @@ Robot::Robot() :
 
 	FrontRight.SetInverted(true);
 	BackRight.SetInverted(true);
-	//InitEncoder(m_encoder_right);
-//	talon_left_slave.SetControlMode(CANSpeedController::kFollower);
-//	talon_left_slave.Set(talon_left_master.GetDeviceID());
-//	talon_right_slave.SetControlMode(CANSpeedController::kFollower);
-//	talon_right_slave.Set(talon_right_master.GetDeviceID());
-
-	//talon_ballpick.SetNeutralMode(NeutralMode::Coast);
 
 	InitEncoder(liftEncoderHigh);
 	angle = navx->GetAngle();

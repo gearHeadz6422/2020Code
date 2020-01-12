@@ -3,8 +3,7 @@
 
 using namespace std;
 
-bool motorDebug = false;
-double spinnerSpeed = 0.0;
+bool motorDebug = true;
 
 void Robot::TeleopInit() {
 	// Set the initial state for our variables, and pull some data from the driver station
@@ -27,7 +26,7 @@ void Robot::TeleopInit() {
 	currentAnlge = 0;
 	prevAnlge = 0;
 
-	// Sets the way that the TALONs will recieve input
+	// Sets the way that the Talons will recieve input (We think. In practice changing the mode mysteriously does nothing)
 	FrontLeft.Set(ControlMode::PercentOutput, 0);
 	FrontRight.Set(ControlMode::PercentOutput, 0);
 	BackLeft.Set(ControlMode::PercentOutput, 0);
@@ -36,9 +35,10 @@ void Robot::TeleopInit() {
 	liftHigh.Set(ControlMode::PercentOutput, 0);
 	intake.Set(ControlMode::PercentOutput, 0);
 	grabberWinch.Set(ControlMode::PercentOutput, 0);
-	spinWheel.Set(ControlMode::PercentOutput, 0);
 
-	testTalon0.Set(ControlMode::PercentOutput, 0);
+	// This is test code for master/slave function - DOESN'T WORK
+	// testTalon2.Set(testTalon1.GetDeviceID());
+	// testTalon2.Set(ControlMode::Follower, 2);
 	testTalon1.Set(ControlMode::PercentOutput, 0);
 	testTalon2.Set(ControlMode::PercentOutput, 0);
 	testTalon3.Set(ControlMode::PercentOutput, 0);
@@ -94,7 +94,6 @@ void Robot::TeleopPeriodic() {
 		liftHigh.Set(0.0);
 		liftLow.Set(0.0);
 
-		testTalon0.Set(0.0);
 		testTalon1.Set(0.0);
 		testTalon2.Set(0.0);
 		testTalon3.Set(0.0);
@@ -113,10 +112,12 @@ void Robot::TeleopPeriodic() {
 		testMotor = frc::SmartDashboard::GetNumber("testMotor", -1);
 		motorPower = xboxcontroller0.GetY(frc::Joystick::kLeftHand) * 2;
 
-		switch (testMotor) {
-			case 0:
-				testTalon0.Set(motorPower);
-				break;
+		testTalon1.Set(1.0);
+		testTalon2.Set(1.0);
+		testTalon3.Set(1.0);
+		testTalon4.Set(1.0);
+
+		switch (-1) {
 			case 1:
 				testTalon1.Set(motorPower);
 				break;
@@ -147,7 +148,6 @@ void Robot::TeleopPeriodic() {
 		}
 		return;
 	} else {
-		testTalon0.Set(0.0);
 		testTalon1.Set(0.0);
 		testTalon2.Set(0.0);
 		testTalon3.Set(0.0);
@@ -480,17 +480,6 @@ void Robot::TeleopPeriodic() {
 		rightY1 = -0.5;
 	}
 
-	if (spinnerSpeed == 1) {
-		if (aButton1 && !buttonsPressed[0][0]) {
-			spinnerSpeed = 0.0;
-
-		}
-	} else {
-		if (aButton1 && !buttonsPressed[0][0]) {
-			spinnerSpeed = 1.0;
-		}
-	}
-
 	// Now that we have all of the controller inputs, we set the motors to their cooresponding vqriables
 	if (fabs(rightX1) > fabs(rightY1) && fabs(rightX1) > fabs(leftX1)) {
 		big = fabs(rightX1);
@@ -555,16 +544,6 @@ void Robot::TeleopPeriodic() {
 		startButton2 = xboxcontroller1.GetStartButton();
 
 		dpad2 = xboxcontroller1.GetPOV();
-	}
-
-	if (aButton2 && !buttonsPressed[1][0]) {
-		if (spinning) {
-			spinning = false;
-			spinWheel.Set(0);
-		} else {
-			spinning = true;
-			spinWheel.Set(1);
-		}
 	}
 
 	// Runs the intake
