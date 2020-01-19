@@ -23,6 +23,8 @@ void Robot::TeleopInit() {
 		// analogDev.Reset();
 	}
 
+
+
 	currentAnlge = 0;
 	prevAnlge = 0;
 
@@ -65,7 +67,7 @@ void Robot::TeleopInit() {
 	boxPotentiometer = new AnalogInput(2);
 
 	// Turns on the compressor and sets the solenoid for the grabber to off
-	compressor->SetClosedLoopControl(true);
+	// compressor->SetClosedLoopControl(true); //TODO: Re-enable the compressor lol
 	grabber.Set(frc::DoubleSolenoid::kReverse);
 
 	if (motorDebug) {
@@ -112,10 +114,15 @@ void Robot::TeleopPeriodic() {
 		testMotor = frc::SmartDashboard::GetNumber("testMotor", -1);
 		motorPower = xboxcontroller0.GetY(frc::Joystick::kLeftHand) * 2;
 
-		testTalon1.Set(1.0);
-		testTalon2.Set(1.0);
-		testTalon3.Set(1.0);
-		testTalon4.Set(1.0);
+		frc::Color detectedColor = colorSensor.GetColor();
+		frc::SmartDashboard::PutNumber("Red", detectedColor.red);
+		frc::SmartDashboard::PutNumber("Green", detectedColor.green);
+		frc::SmartDashboard::PutNumber("Blue", detectedColor.blue);
+
+		FrontLeft.Set(0.12);
+		BackLeft.Set(0.12);
+		FrontRight.Set(0.12);
+		BackRight.Set(0.12);
 
 		switch (-1) {
 			case 1:

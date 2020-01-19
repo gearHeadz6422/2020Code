@@ -1,6 +1,7 @@
 #ifndef SRC_ROBOT_H_
 #define SRC_ROBOT_H_
 
+#include "rev/ColorSensorV3.h"
 #include "AHRS.h"
 #include <ctre/Phoenix.h>
 #include <frc/WPIlib.h>
@@ -87,6 +88,9 @@ static std::string desLiftPosition = "low";
 
 static std::string sensorBoardType = "navx";
 // static std::string sensorBoardType = "analogDev";
+
+static constexpr auto i2cPort = frc::I2C::Port::kOnboard;
+static rev::ColorSensorV3 colorSensor{i2cPort};
 
 static bool autoMode = true;
 
